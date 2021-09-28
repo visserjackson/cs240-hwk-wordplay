@@ -1,17 +1,16 @@
 const randWord = dictionary[Math.floor(Math.random() * dictionary.length)];
-alert(`The random word is: ${randWord}`);
+const scramWord = shuffleDurenstenfield(randWord);
+alert(`Available letters: ${scramWord}`);
 
+/*
+In crafting my shuffling algorithm, I consulted https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
+Based on the steps outlined in the article, I coded my own implementation of a Durstenfield shuffling algorithm (0(N)). 
+*/
 function shuffleDurenstenfield(word) {
   let origWord = populateArray(word);
+  let shuffleWord = shuffle(origWord);
 
-  let shuffleWord = [];
-  for (let i = origWord.length - 1; i > 0; i--) {
-    let k = getRandIntInc(1, i);
-    let letter = origWord.splice(k, 1);
-    shuffleWord.push(letter);
-  }
-  shuffleWord.push(origWord[0]);
-  return shuffleWord;
+  return stringify(shuffleWord);
 
   function populateArray(word) {
     let origWord = [];
@@ -22,7 +21,25 @@ function shuffleDurenstenfield(word) {
     origWord.pop();
     return origWord;
   }
-  return populateArray(word);
+
+  function shuffle(word) {
+    let shuffleWord = [];
+    for (let i = origWord.length - 1; i > 0; i--) {
+      let k = getRandIntInc(1, i);
+      let letter = origWord.splice(k, 1);
+      shuffleWord.push(letter);
+    }
+    shuffleWord.push(origWord[0]);
+    return shuffleWord;
+  }
+
+  function stringify(array) {
+    str = "";
+    for (let val of array) {
+      str = str.concat(val);
+    }
+    return str;
+  }
 }
 
 console.log(

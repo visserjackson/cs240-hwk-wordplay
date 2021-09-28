@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Scrabble";
+  src: url(src/scramble-font/Scramble-KVBe.ttf);
+}
+
+h1 {
+  text-align: center;
+  font-family: "Scrabble", sans-serif;
+  font-size: 70px;
+}
+
+p {
+  text-align: center;
+  font-family: "Luckiest Guy", sans-serif;
+  font-size: 30px;
+}
+
+p i {
+  color: firebrick;
+}
+
+footer {
+  font-family: "Luckiest Guy", sans-serif;
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  height: 30px;
+  width: 100%;
+}

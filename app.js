@@ -26,9 +26,7 @@ function shuffleDurenstenfield(word) {
 }
 
 console.log(
-  `The random word in shuffled array form is ${shuffleDurenstenfield(
-    randWord.toString()
-  )}`
+  `Original word: ${randWord} Shuffled word: ${shuffleDurenstenfield(randWord)}`
 );
 
 function getRandIntInc(min, max) {

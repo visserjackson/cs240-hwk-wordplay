@@ -11,8 +11,8 @@ h1 {
 
 p {
   text-align: center;
-  font-family: "Luckiest Guy", sans-serif;
-  font-size: 30px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 40px;
 }
 
 p i {
@@ -20,7 +20,8 @@ p i {
 }
 
 footer {
-  font-family: "Luckiest Guy", sans-serif;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 15px;
   position: fixed;
   left: 10px;
   bottom: 10px;

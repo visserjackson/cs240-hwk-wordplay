@@ -1,4 +1,5 @@
-const randWord = dictionary[Math.floor(Math.random() * dictionary.length)];
+const rootWordBank = generateRootWordBank(dictionary);
+const randWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 const scramWord = shuffleDurenstenfield(randWord);
 alert(`Available letters: ${scramWord}`);
 
@@ -42,22 +43,14 @@ function getRandIntInc(min, max) {
 }
 
 function removeImpossibleWords(dictionary, targetWord) {
-  let dict = splitArray(dictionary);
-  let dict1 = dict[0];
-  let dict2 = dict[1];
-  for (let i = 0; i < dict1.length; i++) {
-    if (dict1[i].length < targetWord.length) {
-      dict1.splice(dict1[i], 1);
+  let dict = dictionary;
+  for (let i = 0; i < dict.length; i++) {
+    if (dict.length < targetWord.length) {
+      dict.splice(dict[i], 1);
     }
   }
 
-  for (let i = 0; i < dict2.length; i++) {
-    if (dict2[i].length < targetWord.length) {
-      dict2.splice(dict2[i], 1);
-    }
-  }
-
-  return dict1.concat(dict2);
+  return dict;
 
   //   function hasDiffLetter(targetWord, word) {
   //     let arr = populateArray(targetWord);
@@ -79,10 +72,20 @@ function populateArray(word) {
   return origWord;
 }
 
-function splitArray(arr) {
-  let splitPoint = Math.floor(arr.length / 2);
-  arr1 = arr.slice(0, splitPoint);
-  arr2 = arr.slice(splitPoint, arr.length - 1);
+// function splitArray(arr) {
+//   let splitPoint = Math.floor(arr.length / 2);
+//   arr1 = arr.slice(0, splitPoint);
+//   arr2 = arr.slice(splitPoint, arr.length - 1);
 
-  return [arr1, arr2];
+//   return [arr1, arr2];
+// }
+
+function generateRootWordBank(dictionary) {
+  let dict = [];
+  for (let word of dictionary) {
+    if (word.length == 6) {
+      dict.push(word);
+    }
+  }
+  return dict;
 }

@@ -92,13 +92,13 @@ function generateRootWordBank(dictionary) {
 
 function generatePowerSet(word) {
   let set = populateArray(word);
-  let sets = [];
+  let powerSet = [];
   for (let item of set) {
-    let setSize = sets.length;
+    let setSize = powerSet.length;
     for (let i = 0; i < setSize; i++) {
-      sets.push([sets[i] + item]);
+      powerSet.push(powerSet[i] + item);
     }
-    sets.push(item);
+    powerSet.push(item);
   }
-  return sets;
+  return powerSet;
 }

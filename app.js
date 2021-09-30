@@ -5,7 +5,7 @@ alert(`Available letters: ${scramWord}`);
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
-however, i wrote all the code for this implementation from scratch(0(N)). 
+however, i wrote all the code for this implementation from scratch. 
 */
 function shuffleDurenstenfield(word) {
   let origWord = populateArray(word);
@@ -88,4 +88,17 @@ function generateRootWordBank(dictionary) {
     }
   }
   return dict;
+}
+
+function generatePowerSet(word) {
+  let set = populateArray(word);
+  let sets = [];
+  for (let item of set) {
+    let setSize = sets.length;
+    for (let i = 0; i < setSize; i++) {
+      sets.push([sets[i] + item]);
+    }
+    sets.push(item);
+  }
+  return sets;
 }

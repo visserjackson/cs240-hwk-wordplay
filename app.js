@@ -1,6 +1,6 @@
 const rootWordBank = generateRootWordBank(dictionary);
-const randWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
-const scramWord = shuffleDurenstenfield(randWord);
+const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
+const scramWord = shuffleDurenstenfield(rootWord);
 alert(`Available letters: ${scramWord}`);
 
 /*
@@ -34,7 +34,7 @@ function shuffleDurenstenfield(word) {
 }
 
 console.log(
-  `Original word: ${randWord} Shuffled word: ${shuffleDurenstenfield(randWord)}`
+  `Original word: ${rootWord} Shuffled word: ${shuffleDurenstenfield(rootWord)}`
 );
 
 function getRandIntInc(min, max) {
@@ -42,24 +42,24 @@ function getRandIntInc(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function removeImpossibleWords(dictionary, targetWord) {
-  let dict = dictionary;
-  for (let i = 0; i < dict.length; i++) {
-    if (dict.length < targetWord.length) {
-      dict.splice(dict[i], 1);
+function removeImpossibleWords(dictionary) {
+  let dict = [];
+  for (let word of dictionary) {
+    if (word.length < 6) {
+      dict.push(word);
     }
   }
-
   return dict;
+}
 
-  //   function hasDiffLetter(targetWord, word) {
-  //     let arr = populateArray(targetWord);
-  //     for (let letter of arr) {
-  //       if (!word.includes(letter)) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
+function hasDiffLetter(rootWord, testWord) {
+  let arr = populateArray(rootWord);
+  for (let letter of arr) {
+    if (!testWord.includes(letter)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function populateArray(word) {

@@ -89,7 +89,9 @@ function generateRootWordBank(dictionary) {
   }
   return dict;
 }
-
+/*
+https://stackoverflow.com/questions/24365954/how-to-generate-a-power-set-of-a-given-set
+*/
 function generatePowerSet(word) {
   let set = populateArray(word);
   let powerSet = [];
@@ -101,4 +103,13 @@ function generatePowerSet(word) {
     powerSet.push(item);
   }
   return powerSet;
+}
+function generatePossibleWords(dictionary, powerSet) {
+  let possibleWords = [];
+  for (let element of powerSet) {
+    if (dictionary.includes(element)) {
+      possibleWords.push(element);
+    }
+  }
+  return possibleWords;
 }

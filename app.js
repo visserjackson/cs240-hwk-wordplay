@@ -92,18 +92,18 @@ function generateRootWordBank(dictionary) {
 /*
 https://stackoverflow.com/questions/24365954/how-to-generate-a-power-set-of-a-given-set
 */
-// function generatePowerSet(word) {
-//   let set = populateArray(word);
-//   let powerSet = [];
-//   for (let item of set) {
-//     let setSize = powerSet.length;
-//     for (let i = 0; i < setSize; i++) {
-//       powerSet.push(powerSet[i] + item);
-//     }
-//     powerSet.push(item);
-//   }
-//   return powerSet;
-// }
+function generatePowerSet(word) {
+  let set = populateArray(word);
+  let powerSet = [];
+  for (let item of set) {
+    let setSize = powerSet.length;
+    for (let i = 0; i < setSize; i++) {
+      powerSet.push(powerSet[i] + item);
+    }
+    powerSet.push(item);
+  }
+  return powerSet;
+}
 function generatePossibleWords(dictionary, combinations) {
   let possibleWords = [];
   for (let element of combinations) {
@@ -136,4 +136,18 @@ function generatePermutations(word, length) {
       }
     }
   }
+}
+
+function checkPermutations(testWord, targetWord) {
+  let target = populateArray(targetWord);
+  let test = populateArray(testWord);
+
+  for (let t of test) {
+    if (target.includes(t)) {
+      target.splice(target.indexOf(t), 1);
+    } else {
+      return false;
+    }
+  }
+  return true;
 }

@@ -45,7 +45,7 @@ function getRandIntInc(min, max) {
 function removeImpossibleWords(dictionary) {
   let dict = [];
   for (let word of dictionary) {
-    if (word.length < 6) {
+    if (!hasDiffLetter(rootWord, word) && word.length < 6) {
       dict.push(word);
     }
   }
@@ -53,9 +53,9 @@ function removeImpossibleWords(dictionary) {
 }
 
 function hasDiffLetter(rootWord, testWord) {
-  let arr = populateArray(rootWord);
+  let arr = populateArray(testWord);
   for (let letter of arr) {
-    if (!testWord.includes(letter)) {
+    if (!rootWord.includes(letter)) {
       return true;
     }
   }

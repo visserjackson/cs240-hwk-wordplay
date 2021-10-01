@@ -1,7 +1,13 @@
 const rootWordBank = generateRootWordBank(dictionary);
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
-const scramWord = shuffleDurenstenfield(rootWord);
-alert(`Available letters: ${scramWord}`);
+const rootWordSpaced = spaceWord(rootWord);
+let scramWord = shuffleDurenstenfield(rootWord);
+var gameDictionary = generateGameDictionary();
+//let wordBank = generateWordBank(dictionary);
+var won = false;
+displayGameBoard();
+guess = prompt("Enter a guess:", "beats the hell outta me");
+console.log(makeGameBoard());
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
@@ -23,19 +29,7 @@ function shuffleDurenstenfield(word) {
     shuffleWord.push(origWord[0]);
     return shuffleWord;
   }
-
-  //   function stringify(array) {
-  //     str = "";
-  //     for (let letter of array) {
-  //       str = str.concat(letter);
-  //     }
-  //     return str;
-  //   }
 }
-
-console.log(
-  `Original word: ${rootWord} Shuffled word: ${shuffleDurenstenfield(rootWord)}`
-);
 
 function getRandIntInc(min, max) {
   //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -80,14 +74,6 @@ function populateArray(word) {
   return origWord;
 }
 
-// function splitArray(arr) {
-//   let splitPoint = Math.floor(arr.length / 2);
-//   arr1 = arr.slice(0, splitPoint);
-//   arr2 = arr.slice(splitPoint, arr.length - 1);
-
-//   return [arr1, arr2];
-// }
-
 function generateRootWordBank(dictionary) {
   let dict = [];
   for (let word of dictionary) {
@@ -97,21 +83,7 @@ function generateRootWordBank(dictionary) {
   }
   return dict;
 }
-/*
-https://stackoverflow.com/questions/24365954/how-to-generate-a-power-set-of-a-given-set
-*/
-function generatePowerSet(word) {
-  let set = populateArray(word);
-  let powerSet = [];
-  for (let item of set) {
-    let setSize = powerSet.length;
-    for (let i = 0; i < setSize; i++) {
-      powerSet.push(powerSet[i] + item);
-    }
-    powerSet.push(item);
-  }
-  return powerSet;
-}
+
 function generatePossibleWords(dictionary, combinations) {
   let possibleWords = [];
   for (let element of combinations) {
@@ -137,7 +109,7 @@ function checkPermutations(testWord, targetWord) {
 }
 
 function generateWordBank(dictionary, rootWord) {
-  wordBank = [];
+  let wordBank = [];
   for (word of dictionary) {
     if (checkPermutations(word, rootWord)) {
       wordBank.push(word);
@@ -145,4 +117,37 @@ function generateWordBank(dictionary, rootWord) {
   }
   wordBank.push(rootWord);
   return wordBank;
+}
+
+function displayGameBoard() {
+  console.log(`Letters: ${rootWordSpaced} `);
+}
+
+function makeGameBoard() {
+  let board = [];
+  for (word in gameDictionary) {
+    board.push([word.hideWord(), word]);
+  }
+  return board;
+}
+function spaceWord(word) {
+  let str = "";
+  for (let i = 0; i < word.length; i++) {
+    str = str.concat(word.charAt(i), " ");
+  }
+  return str;
+}
+
+function hideWord(word) {
+  str = "";
+  for (let i = 0; i < word.length; i++) {
+    str = str.concat("_", " ");
+  }
+  return str;
+}
+
+function generateGameDictionary(dictionary) {
+  let dict = removeImpossibleWords(dictionary);
+  dict = generateWordBank(dict);
+  return dict;
 }

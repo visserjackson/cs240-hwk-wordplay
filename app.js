@@ -2,7 +2,7 @@ const rootWordBank = generateRootWordBank(dictionary);
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 const rootWordSpaced = spaceWord(rootWord);
 let scramWord = shuffleDurenstenfield(rootWord);
-//let gameDictionary = generateGameDictionary(dictionary);
+let gameDictionary = generateGameDictionary(dictionary);
 let wordBank = generateWordBank(dictionary, rootWord);
 let won = false;
 displayGameBoard();
@@ -21,12 +21,12 @@ function shuffleDurenstenfield(word) {
 
   function shuffle(word) {
     let shuffleWord = [];
-    for (let i = origWord.length - 1; i > 0; i--) {
+    for (let i = word.length - 1; i > 0; i--) {
       let k = getRandIntInc(1, i);
-      let letter = origWord.splice(k, 1);
+      let letter = word.splice(k, 1);
       shuffleWord.push(letter);
     }
-    shuffleWord.push(origWord[0]);
+    shuffleWord.push(word[0]);
     return shuffleWord;
   }
 }
@@ -148,6 +148,6 @@ function hideWord(word) {
 
 function generateGameDictionary(dictionary) {
   let dict = removeImpossibleWords(dictionary);
-  dict = generateWordBank(dict);
+  dict = generateWordBank(dict, rootWord);
   return dict;
 }

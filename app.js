@@ -45,21 +45,29 @@ function getRandIntInc(min, max) {
 function removeImpossibleWords(dictionary) {
   let dict = [];
   for (let word of dictionary) {
-    if (!hasDiffLetter(rootWord, word) && word.length < 6) {
+    if (!hasDiffLetter(rootWord, word) && isCorrectLength(word)) {
       dict.push(word);
     }
   }
-  return dict;
-}
 
-function hasDiffLetter(rootWord, testWord) {
-  let arr = populateArray(testWord);
-  for (let letter of arr) {
-    if (!rootWord.includes(letter)) {
+  function hasDiffLetter(rootWord, testWord) {
+    let arr = populateArray(testWord);
+    for (let letter of arr) {
+      if (!rootWord.includes(letter)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function isCorrectLength(word) {
+    if (word.length >= 3 && word.length < 6) {
       return true;
+    } else {
+      return false;
     }
   }
-  return false;
+  return dict;
 }
 
 function populateArray(word) {
@@ -114,30 +122,6 @@ function generatePossibleWords(dictionary, combinations) {
   return possibleWords;
 }
 
-function generatePermutations(word, length) {
-  word = populateArray(word);
-  perms = [];
-  if (length == 1) {
-    perms.push(word);
-    return perms;
-  } else {
-    for (let i = 0; i > length - 1; i++) {
-      generatePermutations(word, length - 1);
-      if (length % 2 == 0) {
-        let temp = word[0];
-        let temp2 = word[length - 1];
-        word[0] = temp2;
-        word[length - 1] = temp;
-      } else {
-        let temp = word[i];
-        let temp2 = word[length - 1];
-        word[i] = temp2;
-        word[length - 1] = temp;
-      }
-    }
-  }
-}
-
 function checkPermutations(testWord, targetWord) {
   let target = populateArray(targetWord);
   let test = populateArray(testWord);
@@ -150,4 +134,14 @@ function checkPermutations(testWord, targetWord) {
     }
   }
   return true;
+}
+
+function generateWordBank(dictionary, rootWord) {
+  wordBank = [];
+  for (word of dictionary) {
+    if (checkPermutations(word, rootWord)) {
+      wordBank.push(word);
+    }
+  }
+  return wordBank;
 }

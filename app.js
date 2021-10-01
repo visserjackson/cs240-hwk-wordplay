@@ -2,12 +2,12 @@ const rootWordBank = generateRootWordBank(dictionary);
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 const rootWordSpaced = spaceWord(rootWord);
 let scramWord = shuffleDurenstenfield(rootWord);
-//var gameDictionary = generateGameDictionary();
-//let wordBank = generateWordBank(dictionary);
-var won = false;
+//let gameDictionary = generateGameDictionary(dictionary);
+let wordBank = generateWordBank(dictionary, rootWord);
+let won = false;
 displayGameBoard();
 guess = prompt("Enter a guess:", "beats the hell outta me");
-//console.log(makeGameBoard());
+console.log(makeGameBoard());
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 

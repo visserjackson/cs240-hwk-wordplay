@@ -143,5 +143,6 @@ function generateWordBank(dictionary, rootWord) {
       wordBank.push(word);
     }
   }
+  wordBank.push(rootWord);
   return wordBank;
 }

@@ -1,13 +1,17 @@
 const rootWordBank = generateRootWordBank(dictionary);
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
-const rootWordSpaced = spaceWord(rootWord);
 let scramWord = shuffleDurenstenfield(rootWord);
-let gameDictionary = generateGameDictionary(dictionary);
+let scramWordSpaced = spaceWord(scramWord);
 let wordBank = generateWordBank(dictionary, rootWord);
-let won = false;
-displayGameBoard();
-guess = prompt("Enter a guess:", "beats the hell outta me");
-console.log(makeGameBoard());
+let gameDictionary = generateGameDictionary(dictionary);
+let hiddenDictionary = generateHiddenDictionary(gameDictionary);
+
+let gameOver = false;
+
+while (!gameOver) {
+  let guess = prompt("Enter a guess:", "");
+  playRound();
+}
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
@@ -123,13 +127,13 @@ function displayGameBoard() {
   console.log(`Letters: ${rootWordSpaced} `);
 }
 
-function makeGameBoard() {
-  let board = [];
-  for (word in gameDictionary) {
-    board.push([word.hideWord(), word]);
-  }
-  return board;
-}
+// function makeGameBoard() {
+//   let board = [];
+//   for (word in gameDictionary) {
+//     board.push([hideWord(word), word]);
+//   }
+//   return board;
+// }
 function spaceWord(word) {
   let str = "";
   for (let i = 0; i < word.length; i++) {
@@ -150,4 +154,30 @@ function generateGameDictionary(dictionary) {
   let dict = removeImpossibleWords(dictionary);
   dict = generateWordBank(dict, rootWord);
   return dict;
+}
+
+function playRound() {
+  displayGameBoard();
+  let guess = prompt("Enter a guess:", "");
+
+  if (gameDictionary.includes(guess)) {
+    alert("Correct!");
+    let guessIndex = gameDictionary.indexOf(guess);
+    hiddenDictionary.splice(guessIndex, 1, gameDictionary[guessIndex]);
+  }
+}
+
+function generateHiddenDictionary(dictionary) {
+  let hidden = [];
+  for (let word of dictionary) {
+    hidden.push(hideWord(word));
+  }
+  return hidden;
+}
+
+function displayGameBoard() {
+  console.log(`Letters: ${scramWordSpaced}`);
+  for (let word of hiddenDictionary) {
+    console.log(word);
+  }
 }

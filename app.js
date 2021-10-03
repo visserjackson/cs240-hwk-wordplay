@@ -5,13 +5,14 @@ let scramWordSpaced = spaceWord(scramWord);
 let wordBank = generateWordBank(dictionary, rootWord);
 let gameDictionary = generateGameDictionary(dictionary);
 let hiddenDictionary = generateHiddenDictionary(gameDictionary);
-
+let correctCounter = 0;
+const correctToWin = gameDictionary.length;
 let gameOver = false;
 
-// while (!gameOver) {
-//   let guess = prompt("Enter a guess:", "");
-//   playRound();
-// }
+while (!gameOver) {
+  let guess = prompt("Enter a guess:", "");
+  playRound();
+}
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
@@ -58,14 +59,15 @@ function removeImpossibleWords(dictionary) {
     return false;
   }
 
-  function isCorrectLength(word) {
-    if (word.length >= 3 && word.length < 6) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   return dict;
+}
+
+function isCorrectLength(word) {
+  if (word.length >= 3 && word.length < 6) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function populateArray(word) {
@@ -153,6 +155,29 @@ function playRound() {
     alert("Correct!");
     let guessIndex = gameDictionary.indexOf(guess);
     hiddenDictionary.splice(guessIndex, 1, gameDictionary[guessIndex]);
+    correctCounter++;
+  } else if (!dictionary.includes(guess) || !isCorrectLength(guess)) {
+    alert(`${guess} is not a valid word.`);
+  } else if (hiddenDictionary.includes(guess)) {
+    alert(`${guess} has already been found.`);
+  } else if (guess == "*") {
+    scramWord = shuffleDurenstenfield(rootWord);
+    scramWordSpaced = spaceWord(scramWord);
+    alert("Shuffled! Good luck.");
+  } else if (guess == null) {
+    gameOver = true;
+    alert(`Game over! You got ${correctCounter} out of ${correctToWin} words.`);
+    function displayEndingBoard() {
+      str = "";
+      for (let word of gameDictionary) {
+        str = str.concat(word, "\n");
+      }
+      console.log(str);
+    }
+  }
+  if (correctCount == correctToWin) {
+    gameOver = true;
+    alert(`Congratulations, you win! You got all ${correctToWin} words.`);
   }
 }
 
@@ -165,8 +190,9 @@ function generateHiddenDictionary(dictionary) {
 }
 
 function displayGameBoard() {
-  console.log(`Letters: ${scramWordSpaced}`);
   str = "";
+  str = str.concat(`Letters: ${scramWordSpaced}`, "\n");
+
   for (let word of hiddenDictionary) {
     str = str.concat(word, "\n");
   }

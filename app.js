@@ -8,10 +8,10 @@ let hiddenDictionary = generateHiddenDictionary(gameDictionary);
 
 let gameOver = false;
 
-while (!gameOver) {
-  let guess = prompt("Enter a guess:", "");
-  playRound();
-}
+// while (!gameOver) {
+//   let guess = prompt("Enter a guess:", "");
+//   playRound();
+// }
 
 /*
 shuffle algorithm modeled based on https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#Modern_method. 
@@ -123,17 +123,6 @@ function generateWordBank(dictionary, rootWord) {
   return wordBank;
 }
 
-function displayGameBoard() {
-  console.log(`Letters: ${rootWordSpaced} `);
-}
-
-// function makeGameBoard() {
-//   let board = [];
-//   for (word in gameDictionary) {
-//     board.push([hideWord(word), word]);
-//   }
-//   return board;
-// }
 function spaceWord(word) {
   let str = "";
   for (let i = 0; i < word.length; i++) {
@@ -177,7 +166,9 @@ function generateHiddenDictionary(dictionary) {
 
 function displayGameBoard() {
   console.log(`Letters: ${scramWordSpaced}`);
+  str = "";
   for (let word of hiddenDictionary) {
-    console.log(word);
+    str = str.concat(word, "\n");
   }
+  console.log(str);
 }

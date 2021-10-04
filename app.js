@@ -4,13 +4,11 @@ let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
 let wordBank = generateWordBank(dictionary, rootWord);
 let gameDictionary = generateGameDictionary(dictionary);
+const correctToWin = gameDictionary.length;
 let hiddenDictionary = generateHiddenDictionary(gameDictionary);
 let correctCounter = 0;
-const correctToWin = gameDictionary.length;
 let gameOver = false;
-
 while (!gameOver) {
-  let guess = prompt("Enter a guess:", "");
   playRound();
 }
 
@@ -63,6 +61,9 @@ function removeImpossibleWords(dictionary) {
 }
 
 function isCorrectLength(word) {
+  if (word == null) {
+    return "null";
+  }
   if (word.length >= 3 && word.length < 6) {
     return true;
   } else {
@@ -148,25 +149,15 @@ function generateGameDictionary(dictionary) {
 }
 
 function playRound() {
+  console.log(gameDictionary);
+  //console.clear();
   displayGameBoard();
   let guess = prompt("Enter a guess:", "");
-
-  if (gameDictionary.includes(guess)) {
-    alert("Correct!");
-    let guessIndex = gameDictionary.indexOf(guess);
-    hiddenDictionary.splice(guessIndex, 1, gameDictionary[guessIndex]);
-    correctCounter++;
-  } else if (!dictionary.includes(guess) || !isCorrectLength(guess)) {
-    alert(`${guess} is not a valid word.`);
-  } else if (hiddenDictionary.includes(guess)) {
-    alert(`${guess} has already been found.`);
-  } else if (guess == "*") {
-    scramWord = shuffleDurenstenfield(rootWord);
-    scramWordSpaced = spaceWord(scramWord);
-    alert("Shuffled! Good luck.");
-  } else if (guess == null) {
+  if (guess == null) {
     gameOver = true;
     alert(`Game over! You got ${correctCounter} out of ${correctToWin} words.`);
+    console.clear();
+    displayEndingBoard();
     function displayEndingBoard() {
       str = "";
       for (let word of gameDictionary) {
@@ -174,10 +165,27 @@ function playRound() {
       }
       console.log(str);
     }
-  }
-  if (correctCount == correctToWin) {
-    gameOver = true;
-    alert(`Congratulations, you win! You got all ${correctToWin} words.`);
+  } else {
+    if (gameDictionary.includes(guess) && !hiddenDictionary.includes(guess)) {
+      alert("Correct!");
+      let guessIndex = gameDictionary.indexOf(guess);
+      hiddenDictionary.splice(guessIndex, 1, gameDictionary[guessIndex]);
+      correctCounter++;
+    } else if (!dictionary.includes(guess) || !isCorrectLength(guess)) {
+      {
+        alert(`${guess} is not a valid word.`);
+      }
+    } else if (hiddenDictionary.includes(guess)) {
+      alert(`${guess} has already been found.`);
+    } else if (guess == "*") {
+      scramWord = shuffleDurenstenfield(rootWord);
+      scramWordSpaced = spaceWord(scramWord);
+      alert("Shuffled! Good luck.");
+    }
+    if (correctCounter == correctToWin) {
+      gameOver = true;
+      alert(`Congratulations, you win! You got all ${correctToWin} words.`);
+    }
   }
 }
 

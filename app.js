@@ -1,5 +1,5 @@
 const rootWordBank = generateRootWordBank(dictionary); //bank of possible root words
-const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
+const rootWord = "trysts"; // rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
 let wordBank = generateWordBank(dictionary, rootWord); //initial array of possible words
@@ -149,6 +149,13 @@ function generateGameDictionary(dictionary) {
 }
 
 function playRound() {
+  function displayEndingBoard() {
+    str = "";
+    for (let word of gameDictionary) {
+      str = str.concat(word, "\n");
+    }
+    console.log(str);
+  }
   //console.log(gameDictionary);
   console.clear();
   displayGameBoard();
@@ -158,13 +165,6 @@ function playRound() {
     alert(`Game over! You got ${correctCounter} out of ${correctToWin} words.`);
     console.clear();
     displayEndingBoard();
-    function displayEndingBoard() {
-      str = "";
-      for (let word of gameDictionary) {
-        str = str.concat(word, "\n");
-      }
-      console.log(str);
-    }
   } else {
     if (gameDictionary.includes(guess) && !hiddenDictionary.includes(guess)) {
       alert("Correct!");

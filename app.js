@@ -1,5 +1,8 @@
 const rootWordBank = generateRootWordBank(dictionary); //bank of possible root words
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
+const ROOT_WORD_LENGTH = 6;
+const MIN_LENGTH = 3;
+const MAX_LENGTH = 5;
 let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
 let gameDictionary = generateGameDictionary(dictionary); //final array of possible words
@@ -19,6 +22,7 @@ function playRound() {
     for (let word of gameDictionary) {
       str = str.concat(word, "\n");
     }
+    str = str.concat("\n", `ROOT WORD: ${rootWord}`);
     console.log(str);
   }
   console.clear();
@@ -117,7 +121,7 @@ function isCorrectLength(word) {
   if (word == null) {
     return "null";
   }
-  if (word.length >= 3 && word.length < 6) {
+  if (word.length >= MIN_LENGTH && word.length <= MAX_LENGTH) {
     return true;
   } else {
     return false;
@@ -139,7 +143,7 @@ function populateArray(word) {
 function generateRootWordBank(dictionary) {
   let dict = [];
   for (let word of dictionary) {
-    if (word.length == 6) {
+    if (word.length == ROOT_WORD_LENGTH) {
       dict.push(word);
     }
   }
@@ -212,7 +216,7 @@ function generateHiddenDictionary(dictionary) {
 //logs a string representation of the game board to the console
 function displayGameBoard() {
   str = "";
-  str = str.concat(`Letters: ${scramWordSpaced}`, "\n");
+  str = str.concat(`Letters: ${scramWordSpaced}`, "\n", "\n");
 
   for (let word of hiddenDictionary) {
     str = str.concat(word, "\n");

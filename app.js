@@ -1,11 +1,11 @@
-const rootWordBank = generateRootWordBank(dictionary);
+const rootWordBank = generateRootWordBank(dictionary); //bank of possible root words
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
-let wordBank = generateWordBank(dictionary, rootWord);
-let gameDictionary = generateGameDictionary(dictionary);
+let wordBank = generateWordBank(dictionary, rootWord); //initial array of possible words
+let gameDictionary = generateGameDictionary(wordBank); //final array of possible words
 const correctToWin = gameDictionary.length;
-let hiddenDictionary = generateHiddenDictionary(gameDictionary);
+let hiddenDictionary = generateHiddenDictionary(gameDictionary); //array of words that start as blank and then are filled in as user guesses
 let correctCounter = 0;
 let gameOver = false;
 while (!gameOver) {
@@ -149,10 +149,10 @@ function generateGameDictionary(dictionary) {
 }
 
 function playRound() {
-  console.log(gameDictionary);
-  //console.clear();
+  //console.log(gameDictionary);
+  console.clear();
   displayGameBoard();
-  let guess = prompt("Enter a guess:", "");
+  let guess = prompt("Enter a guess (or * to shuffle the letters):", "");
   if (guess == null) {
     gameOver = true;
     alert(`Game over! You got ${correctCounter} out of ${correctToWin} words.`);
@@ -171,19 +171,20 @@ function playRound() {
       let guessIndex = gameDictionary.indexOf(guess);
       hiddenDictionary.splice(guessIndex, 1, gameDictionary[guessIndex]);
       correctCounter++;
+    } else if (guess == "*") {
+      scramWord = shuffleDurenstenfield(rootWord);
+      scramWordSpaced = spaceWord(scramWord);
+      alert("Shuffled! Good luck.");
     } else if (!dictionary.includes(guess) || !isCorrectLength(guess)) {
       {
         alert(`${guess} is not a valid word.`);
       }
     } else if (hiddenDictionary.includes(guess)) {
       alert(`${guess} has already been found.`);
-    } else if (guess == "*") {
-      scramWord = shuffleDurenstenfield(rootWord);
-      scramWordSpaced = spaceWord(scramWord);
-      alert("Shuffled! Good luck.");
     }
     if (correctCounter == correctToWin) {
       gameOver = true;
+      displayEndingBoard();
       alert(`Congratulations, you win! You got all ${correctToWin} words.`);
     }
   }

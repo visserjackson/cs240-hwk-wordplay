@@ -2,7 +2,6 @@ const rootWordBank = generateRootWordBank(dictionary); //bank of possible root w
 const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
-//let wordBank = generateWordBank(dictionary, rootWord); //initial array of possible words
 let gameDictionary = generateGameDictionary(dictionary); //final array of possible words
 const correctToWin = gameDictionary.length;
 let hiddenDictionary = generateHiddenDictionary(gameDictionary); //array of words that start as blank and then are filled in as user guesses
@@ -22,7 +21,6 @@ function playRound() {
     }
     console.log(str);
   }
-
   console.clear();
   displayGameBoard();
   //prompt user for a guess
@@ -147,18 +145,10 @@ function generateRootWordBank(dictionary) {
   }
   return dict;
 }
-
-// function generatePossibleWords(dictionary, combinations) {
-//   let possibleWords = [];
-//   for (let element of combinations) {
-//     if (dictionary.includes(element)) {
-//       possibleWords.push(element);
-//     }
-//   }
-//   return possibleWords;
-// }
-
-//checks if test word can be made using the letters of target word
+/*
+checks if test word can be made using the letters of target word. Eli and I discussed approaches at tutoring,
+but I wrote all code myself
+*/
 function checkPermutations(testWord, targetWord) {
   let target = populateArray(targetWord);
   let test = populateArray(testWord);

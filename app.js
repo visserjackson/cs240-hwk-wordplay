@@ -1,8 +1,8 @@
-const rootWordBank = generateRootWordBank(dictionary); //bank of possible root words
-const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 const ROOT_WORD_LENGTH = 6;
 const MIN_LENGTH = 3;
 const MAX_LENGTH = 5;
+const rootWordBank = generateRootWordBank(dictionary); //bank of possible root words
+const rootWord = rootWordBank[Math.floor(Math.random() * rootWordBank.length)];
 let scramWord = shuffleDurenstenfield(rootWord);
 let scramWordSpaced = spaceWord(scramWord);
 let gameDictionary = generateGameDictionary(dictionary); //final array of possible words
